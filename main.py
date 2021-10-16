@@ -3,50 +3,26 @@ import requests
 from bs4 import BeautifulSoup
 import lxml
 
-url = "https://www.youtube.com/watch?v="
+from New_Video import New_Video
+from Streams_State import Streams_State
+
+
+# link = "KFHaZAIG2sA"
 link = "-6JmbdjW-M0"
 
-pars = requests.get(url+link)
-soup = str(BeautifulSoup(pars.text, 'lxml'))
 
 
-#получаем ссылку на канал видео
-def get_channel(source):
-    sought = 'itemtype="http://schema.org/Person"><link href='
-    ind = source.index(sought)+len(sought)
-
-    #finish = 0
-    c = 1
-    while True:
-        if source[ind+c] == '"':
-            finish = ind+c+1
-            break
-        c+=1
-        if c>2000:
-            return "Couldn't find link channel"
 
 
-    channel = source[ind:finish]
-    return channel
+state = Streams_State('C:\\Users\\Vlad\\Desktop\\Data_Streams(1).txt')
+print("Please wait for the result...")
+x = state.get_state()
+# for i in range(len(x[0])):
+#     print(x[0][i])
+# print("Numbers of not working links:"+x[1])
 
-
-# получаем имя видео
-def get_name(source):
-    sought = 'YouTube</title><meta content='
-    ind = source.index(sought)+len(sought)
-
-    # finish = 0
-    c = 1
-    while True:
-        if source[ind+c] == '"':
-            finish = ind+c+1
-            break
-        c+=1
-        if c>2000:
-            return "Couldn't find name video"
-
-    name = source[ind:finish]
-    return name
-
-print(get_channel(soup))
-print(get_name(soup))
+new_vid = New_Video()
+for i in range(len(x[2])):
+    lin = x[2][i].replace("'", '')
+    res = new_vid.tst(lin)
+    print(res)

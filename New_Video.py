@@ -1,7 +1,6 @@
 import sys
 import requests
 from bs4 import BeautifulSoup
-import lxml
 
 
 class New_Video(object):
@@ -87,8 +86,6 @@ class New_Video(object):
 
         r1 = self.get_channel(soup)
         r2 = self.get_name(soup)
-
-        # res = [link, r2, r1]
-        # return res
         res = self.new(r1, r2)
+
         return res

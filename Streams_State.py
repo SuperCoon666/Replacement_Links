@@ -1,13 +1,10 @@
 import sys
 import requests
 from bs4 import BeautifulSoup
-import lxml
-from collections import defaultdict
 
 class Streams_State(object):
     def __init__(self, sours):
         self.sours = sours
-
 
     def query_date(self, u):
         try:
@@ -72,4 +69,3 @@ class Streams_State(object):
 
         gg = [statuses, numbers, liars, repeated]
         return gg
-        # print(numbers)

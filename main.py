@@ -25,7 +25,6 @@ for i in range(len(x[2])):
         lin = x[2][i].replace("'", '')
 
         r1 = new_vid.tst(lin)
-        # answer = "%s: Old link:%s; New link:%s" % (x[1][i], x[2][i], r1)
         answer = x[1][i] +  " - " + r1
         print(answer)
     except:

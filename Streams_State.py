@@ -2,6 +2,7 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 import lxml
+from collections import defaultdict
 
 class Streams_State(object):
     def __init__(self, sours):
@@ -35,22 +36,40 @@ class Streams_State(object):
     def get_state(self):
         f = open(self.sours)
         f = f.readlines()
-        numbers = ""
+        numbers = []
         statuses = []
         liars = []
+        repeated = {}
         for i in range(len(f)):
             if not f[i].strip():
                 continue
+
             result = self.link_check(f[i])
             statuses.append(result)
 
+            ind = f[i].index("'")
+            numb_i = f[i]
+            name = numb_i[ind:].replace("\n", '').replace("'", '')
+            for j in range(i, len(f)):
+                if name not in repeated:
+                    repeated[name] = "%s" % numb_i[:ind]
+                    continue
+
+                xx = f[j]
+                inn = xx.index("'")
+
+                if xx[:inn] in repeated[name]:
+                    continue
+
+                if name in xx[inn:]:
+                    repeated[name] += "%s" % xx[:inn]
+                # print(name, xx[:inn], xx[inn:], xx[inn:] in name  )
+
             if "False" in result:
-                ind = f[i].index("'")
-                numb_i = f[i]
                 liars.append(numb_i[ind:])
                 numb_i = numb_i[:ind]
-                numbers+= " "+numb_i
+                numbers.append(numb_i.replace(",", ""))
 
-        gg = [statuses, numbers, liars]
+        gg = [statuses, numbers, liars, repeated]
         return gg
         # print(numbers)

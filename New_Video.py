@@ -9,8 +9,6 @@ class New_Video(object):
         try:
             sought = 'itemtype="http://schema.org/Person"><link href='
             ind = source.index(sought)+len(sought)
-
-            #finish = 0
             c = 1
             while True:
                 if source[ind+c] == '"':
@@ -32,8 +30,6 @@ class New_Video(object):
         try:
             sought = 'YouTube</title><meta content='
             ind = source.index(sought)+len(sought)
-
-            # finish = 0
             c = 1
             while True:
                 if source[ind+c] == '"':
@@ -47,6 +43,8 @@ class New_Video(object):
             return name
         except:
             return "Error: "+ str(sys.exc_info()[1])
+
+    #поиск замены на канале
     def new(self, source, name):
         source = source.replace('"', '') + "/videos"
         pars = requests.get(source)
@@ -79,6 +77,7 @@ class New_Video(object):
         # print(txt)
         return res
 
+    #запрос канала, названия и поиска замены
     def tst(self, link):
         url = "https://www.youtube.com/watch?v="
         pars = requests.get(url+link)

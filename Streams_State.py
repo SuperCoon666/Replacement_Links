@@ -6,6 +6,7 @@ class Streams_State(object):
     def __init__(self, sours):
         self.sours = sours
 
+    #парс страницы и обработка состояния
     def query_date(self, u):
         try:
             url = "https://www.youtube.com/watch?v=" + u
@@ -20,6 +21,7 @@ class Streams_State(object):
             e = sys.exc_info()[1]
             return e
 
+    #проверка состояния трансляции
     def link_check(self, start):
         try:
             source = start.replace("\n", '')
@@ -30,6 +32,7 @@ class Streams_State(object):
         except:
             return "Error: "+ str(sys.exc_info()[1])
 
+    #возвращает состояние трансляций и повторы
     def get_state(self):
         f = open(self.sours)
         f = f.readlines()
